@@ -1,14 +1,23 @@
+
+export namespace JSX {
+    export interface IntrinsicElements {
+        [elemName: string]: Record<string, string>;
+    }
+
+    export interface Element {
+        type: "element";
+        tag: string;
+        props: Record<string, any>;
+        children: VNode[];
+    }
+}
+
 export type Component<T extends { children?: VNode[] }> = (props: T) => VNode;
 
 export type VNode = {
   type: "text";
   text: string;
-} | {
-  type: "element";
-  tag: string;
-  props: Record<string, any>;
-  children: VNode[];
-};
+} | JSX.Element;
 
 export function h<T extends { children?: VNode[] }>(
   tag: string | Component<T>,
