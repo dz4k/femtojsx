@@ -90,8 +90,17 @@ export function render(vn: VNode): string {
   return rv.join("");
 }
 
-export function Fragment({ children }: { children: VNode[] }): VNode {
-  return { type: "fragment", children };
+export function Fragment({ children }: { children: (string | VNode | (string | VNode)[])[] }): VNode {
+  return {
+    type: "fragment",
+    children: children.flat().map((child) => {
+      if (typeof child === "object") return child;
+      return {
+        type: "text",
+        text: child?.toString() ?? "",
+      };
+    }),
+  };
 }
 
 export function htmlescape(str: string): string {
