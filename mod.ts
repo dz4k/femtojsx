@@ -90,8 +90,8 @@ export function render(vn: VNode): string {
   return rv.join("");
 }
 
-export function Fragment({ children }: { children: VNode[] }) {
-  return children;
+export function Fragment({ children }: { children: VNode[] }): VNode {
+  return { type: "fragment", children };
 }
 
 export function htmlescape(str: string): string {
