@@ -17,6 +17,9 @@ export type Component<T extends { children?: VNode[] }> = (props: T) => VNode;
 export type VNode = {
   type: "text";
   text: string;
+} | {
+  type: "fragment";
+  children: VNode[];
 } | JSX.Element;
 
 export function h<T extends { children?: VNode[] }>(
@@ -58,6 +61,7 @@ const selfClosing = new Set([
 
 export function render(vn: VNode): string {
   if (vn.type === "text") return htmlescape(vn.text);
+  if (vn.type === "fragment") return vn.children.map(render).join("");
 
   const { tag, props, children } = vn;
 
